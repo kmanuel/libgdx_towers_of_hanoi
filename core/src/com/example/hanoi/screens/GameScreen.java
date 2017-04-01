@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
 	private void drawHighscore() {
 		game.batch.begin();
 		game.batch.setProjectionMatrix(game.camera.combined);
-		game.font.draw(game.batch, game.getHighscore(), HIGHSCORE_X_POSITION, HIGHSCORE_Y_POSITION);
+		game.font.draw(game.batch, game.getHighscoreString(), HIGHSCORE_X_POSITION, HIGHSCORE_Y_POSITION);
 		game.batch.end();
 	}
 

@@ -53,7 +53,7 @@ public class GameFinishedScreen implements Screen {
 	}
 
 	private Label createHighscoreLabel(HanoiGame game) {
-		Label highscoreLabel = new Label(game.getHighscore(), new Label.LabelStyle(new BitmapFont(), Color.GREEN));
+		Label highscoreLabel = new Label(game.getHighscoreString(), new Label.LabelStyle(new BitmapFont(), Color.GREEN));
 		highscoreLabel.setFontScale(1.5f);
 		return highscoreLabel;
 	}

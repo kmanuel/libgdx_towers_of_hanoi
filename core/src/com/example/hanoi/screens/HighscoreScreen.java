@@ -26,7 +26,7 @@ public class HighscoreScreen implements Screen {
 		table.setFillParent(true);
 		stage.addActor(table);
 		
-		Label highscoreLabel = new Label(game.getHighscore(), new Label.LabelStyle(new BitmapFont(), Color.GREEN));
+		Label highscoreLabel = new Label(game.getBestHighscoreString(), new Label.LabelStyle(new BitmapFont(), Color.GREEN));
 		highscoreLabel.setFontScale(3);
 		
 		table.add(highscoreLabel);

@@ -38,8 +38,6 @@ public class HanoiGame extends Game {
 	private int currentLevel;
 	private long currentScore = 0;
 
-	private String scoreString;
-	
 	public Sprite backgroundSprite;
 
 	private Skin skin;
@@ -56,7 +54,6 @@ public class HanoiGame extends Game {
 
 	private void initFields() {
 		currentLevel = 1;
-		scoreString = "Highscore: " + getBestScore();
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		camera = new OrthographicCamera();
@@ -105,7 +102,6 @@ public class HanoiGame extends Game {
 
 	private void resetHighscore() {
 		this.currentScore = 0;
-		updateScoreString();
 	}
 
 	public void nextLevel() {
@@ -149,7 +145,6 @@ public class HanoiGame extends Game {
 		if (isNewHighscore()) {
 			saveCurrentHighscore();
 		}
-		updateScoreString();
 	}
 
 	private void increaseScore(double d) {
@@ -160,19 +155,10 @@ public class HanoiGame extends Game {
 		return currentScore > getBestScore();
 	}
 
-	public long getBestScore() {
-		Preferences prefs = Gdx.app.getPreferences("SpeedHanoiPreferences");
-		return prefs.getLong("highscore", 0);
-	}
-
 	private void saveCurrentHighscore() {
 		Preferences prefs = Gdx.app.getPreferences("SpeedHanoiPreferences");
 		prefs.putLong("highscore", currentScore);
 		prefs.flush();
-	}
-	
-	private void updateScoreString() {
-		scoreString = "Highscore: " + currentScore;
 	}
 	
 	public void finish(double d) {
@@ -185,8 +171,17 @@ public class HanoiGame extends Game {
 		this.setScreen(new GameFinishedScreen(this));
 	}
 
-	public CharSequence getHighscore() {
-		return scoreString;
+	public CharSequence getHighscoreString() {
+		return "Highscore: " + currentScore;
+	}
+	
+	public CharSequence getBestHighscoreString() {
+		return "Highscore: " + getBestScore();
+	}
+	
+	public long getBestScore() {
+		Preferences prefs = Gdx.app.getPreferences("SpeedHanoiPreferences");
+		return prefs.getLong("highscore", 0);
 	}
 	
 	public void renderBackground() {
