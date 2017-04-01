@@ -83,7 +83,7 @@ public class HanoiGame extends Game {
 
 	private void resetHighscore() {
 		this.currentScore = 0;
-		scoreString = "Highscore: " + currentScore;
+		updateScoreString();
 	}
 
 	public void nextLevel() {
@@ -122,12 +122,16 @@ public class HanoiGame extends Game {
 		currentLevel++;
 	}
 
-	private void updateScore(double d) {
-		currentScore += d;
+	private void updateScore(double additionalPoints) {
+		increaseScore(additionalPoints);
 		if (isNewHighscore(currentScore)) {
 			saveHighscore(currentScore);
 		}
-		scoreString = "Highscore: " + currentScore;
+		updateScoreString();
+	}
+
+	private void increaseScore(double d) {
+		currentScore += d;
 	}
 
 	private boolean isNewHighscore(long score) {
@@ -145,13 +149,15 @@ public class HanoiGame extends Game {
 		prefs.flush();
 	}
 	
+	private void updateScoreString() {
+		scoreString = "Highscore: " + currentScore;
+	}
+	
 	public void finish(double d) {
 		levelUp();
 		updateScore(d);
 		showFinishScreen();
 	}
-
-
 
 	private void showEndScreen() {
 		this.setScreen(new GameFinishedScreen(this));

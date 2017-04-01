@@ -12,9 +12,13 @@ public class HanoiGameField {
 	
 
 	public void createGameField(int level) {
-		this.level = level;
+		initializeFields(level);
 		createRacks();
 		fillFirstRack(level);
+	}
+
+	private void initializeFields(int level) {
+		this.level = level;
 	}
 
 	private void createRacks() {

@@ -15,20 +15,15 @@ public class BlockRack {
 	}
 	
 	public boolean addBlock(HanoiBlock block) {
-		if (this.hasBlocks() && !canPutOnTop(block)) {
+		if (!canPutOnTop(block)) {
 			return false;
 		}
-		blocks.add(block);
-		block.setRack(this);
+		putBlockOnTop(block);
 		return true;
 	}
 
 	private boolean canPutOnTop(HanoiBlock block) {
-		return this.hasBlocks() && getTopBlock().getLevel() < block.getLevel();
-	}
-	
-	public boolean hasBlocks() {
-		return blocks.size > 0;
+		return !this.hasBlocks() || getTopBlock().getLevel() < block.getLevel();
 	}
 
 	private HanoiBlock getTopBlock() {
@@ -37,9 +32,10 @@ public class BlockRack {
 		}
 		return blocks.get(blocks.size - 1);
 	}
-
-	public Array<HanoiBlock> getBlocks() {
-		return this.blocks;
+	
+	private void putBlockOnTop(HanoiBlock block) {
+		blocks.add(block);
+		block.setRack(this);
 	}
 
 	public HanoiBlock removeTopBlock() {
@@ -48,7 +44,15 @@ public class BlockRack {
 		}
 		return blocks.removeIndex(blocks.size - 1);
 	}
+	
+	public boolean hasBlocks() {
+		return blocks.size > 0;
+	}
 
+	public Array<HanoiBlock> getBlocks() {
+		return this.blocks;
+	}
+	
 	public int getNumber() {
 		return this.rackNumber;
 	}
