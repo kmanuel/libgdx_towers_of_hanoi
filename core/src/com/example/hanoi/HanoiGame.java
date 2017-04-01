@@ -4,7 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.example.hanoi.screens.GameFinishedScreen;
@@ -18,6 +20,10 @@ public class HanoiGame extends Game {
 	public static final int SCREEN_WIDTH = 800;
 	public static final int SCREEN_HEIGHT = 480;
 
+	public static Texture backgroundTexture;
+	
+	private static final int MAX_LEVEL = 7;
+	
 	public ShapeRenderer shapeRenderer;
 	public SpriteBatch batch;
 	public BitmapFont font;
@@ -27,12 +33,13 @@ public class HanoiGame extends Game {
 	private int currentLevel;
 	private long currentScore = 0;
 
-	private int maxLevel = 2;
-
 	private String scoreString;
+	public Sprite backgroundSprite;
 
 	@Override
 	public void create() {
+		backgroundTexture = new Texture(Gdx.files.internal("hanoi_background.png"));
+		backgroundSprite =new Sprite(backgroundTexture);
 		initFields();
 		createRenderer();
 		showMenu();
@@ -108,7 +115,7 @@ public class HanoiGame extends Game {
 	}
 	
 	private boolean isMaxLevelReached() {
-		return currentLevel > maxLevel;
+		return currentLevel > MAX_LEVEL;
 	}
 
 	private void levelUp() {
@@ -152,6 +159,13 @@ public class HanoiGame extends Game {
 
 	public CharSequence getHighscore() {
 		return scoreString;
+	}
+	
+	public void renderBackground() {
+		batch.begin();
+		batch.setProjectionMatrix(camera.combined);
+		batch.draw(backgroundSprite, 0, 0, HanoiGame.SCREEN_WIDTH, HanoiGame.SCREEN_HEIGHT);
+		batch.end();
 	}
 
 }

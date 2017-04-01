@@ -39,6 +39,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		clearScreen();
+		game.renderBackground();
 		handleInput();
 		renderHanoiFieldShapes();
 		checkEndState();
