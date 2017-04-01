@@ -2,16 +2,10 @@ package com.example.hanoi.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -29,7 +23,6 @@ public class MainMenuScreen implements Screen {
 			HanoiGame.SCREEN_HEIGHT 
 			/ (NUMBER_OF_BUTTONS_ON_SCREEN + BETWEEN_BUTTON_PADDING + TOP_PADDING + BOTTOM_PADDING);
 	
-	private Skin skin;
 	private Stage stage;
 	private Table table;
 	private HanoiGame game;
@@ -49,18 +42,18 @@ public class MainMenuScreen implements Screen {
 	}
 
 	private void addButtonsToTable(Table table) {
-		TextButtonStyle textButtonStyle = createDefaultButtonStyle();
-		addStartButton(textButtonStyle, table);
-		addHighscoreButton(textButtonStyle, table);
-		addExitButton(textButtonStyle, table);
+		addStartButton(table);
+		addHighscoreButton(table);
+		addExitButton(table);
 	}
 	
-	private void addStartButton(TextButtonStyle textButtonStyle, Table table) {
-		TextButton startGameButton = createStartButton(textButtonStyle);
+	private void addStartButton(Table table) {
+		TextButton startGameButton = createStartButton();
 		table.add(startGameButton).pad(25).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
 	}
 	
-	private TextButton createStartButton(TextButtonStyle textButtonStyle) {
+	private TextButton createStartButton() {
+		TextButtonStyle textButtonStyle = game.createButtonStyle("green");
 		TextButton startGameButton = new TextButton("Start", textButtonStyle);
 		startGameButton.addListener(new InputListener() {
 			@Override
@@ -73,17 +66,13 @@ public class MainMenuScreen implements Screen {
 		return startGameButton;
 	}
 
-	private void addHighscoreButton(TextButtonStyle textButtonStyle, Table table) {
-		TextButton highscoreButton = createHighscoreButton(textButtonStyle);
+	private void addHighscoreButton(Table table) {
+		TextButton highscoreButton = createHighscoreButton();
 		table.add(highscoreButton).pad(25).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
 	}
 	
-	private void addExitButton(TextButtonStyle textButtonStyle, Table table) {
-		TextButton exitButton = createExitButton(textButtonStyle);
-		table.add(exitButton).pad(25).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
-	}
-
-	private TextButton createHighscoreButton(TextButtonStyle textButtonStyle) {
+	private TextButton createHighscoreButton() {
+		TextButtonStyle textButtonStyle = game.createButtonStyle("yellow");
 		TextButton highscoreButton = new TextButton("Highscore", textButtonStyle);
 		highscoreButton.addListener(new InputListener() {
 			@Override
@@ -95,7 +84,13 @@ public class MainMenuScreen implements Screen {
 		return highscoreButton;
 	}
 	
-	private TextButton createExitButton(TextButtonStyle textButtonStyle) {
+	private void addExitButton(Table table) {
+		TextButton exitButton = createExitButton();
+		table.add(exitButton).pad(25).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+	}
+	
+	private TextButton createExitButton() {
+		TextButtonStyle textButtonStyle = game.createButtonStyle("red");
 		TextButton exitButton = new TextButton("Exit", textButtonStyle);
 		exitButton.addListener(new InputListener() {
 			@Override
@@ -105,25 +100,6 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 		return exitButton;
-	}
-	
-	private TextButtonStyle createDefaultButtonStyle() {
-		skin = new Skin();
-
-		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
-		skin.add("white", new Texture(pixmap));
-		skin.add("default", new BitmapFont());
-
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("default", textButtonStyle);
-		return textButtonStyle;
 	}
 
 	@Override

@@ -2,16 +2,10 @@ package com.example.hanoi.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -19,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.example.hanoi.HanoiGame;
 
 public class LevelFinishedScreen implements Screen {
-	private Skin skin;
 	private Stage stage;
 	private Table table;
 	private HanoiGame game;
@@ -38,10 +31,8 @@ public class LevelFinishedScreen implements Screen {
 		
 		stage.addActor(table);
 
-		TextButtonStyle textButtonStyle = createDefaultButtonStyle();
-
-		TextButton nextLevelButton = createNextLevelButton(textButtonStyle);
-		TextButton backToMainButton = createBackToMainButton(textButtonStyle);
+		TextButton nextLevelButton = createNextLevelButton(game.createButtonStyle("green"));
+		TextButton backToMainButton = createBackToMainButton(game.createButtonStyle("red"));
 
 		int buttonWidth = HanoiGame.SCREEN_WIDTH / 4;
 		int buttonHeight = HanoiGame.SCREEN_HEIGHT / 5;
@@ -77,25 +68,6 @@ public class LevelFinishedScreen implements Screen {
 		return backToMenuButton;
 	}
 	
-	private TextButtonStyle createDefaultButtonStyle() {
-		skin = new Skin();
-
-		Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
-		pixmap.setColor(Color.WHITE);
-		pixmap.fill();
-		skin.add("white", new Texture(pixmap));
-		skin.add("default", new BitmapFont());
-
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-		textButtonStyle.font = skin.getFont("default");
-		skin.add("default", textButtonStyle);
-		return textButtonStyle;
-	}
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
